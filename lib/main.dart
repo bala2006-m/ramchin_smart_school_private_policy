@@ -31,7 +31,6 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
   final String _policyText = _defaultPolicy;
 
   void _printOrSavePdf() {
-    // For web, window.print() opens print dialog where user can Save as PDF.
     html.window.print();
   }
 
@@ -40,7 +39,6 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
       if (html.window.navigator.clipboard != null) {
         await html.window.navigator.clipboard!.writeText(_policyText);
       } else {
-        // Fallback for older browsers
         final textArea = html.TextAreaElement();
         textArea.value = _policyText;
         html.document.body!.append(textArea);
@@ -96,20 +94,14 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Tooltip(
-                  message: 'Print or save as PDF',
-                  child: ElevatedButton(
-                    onPressed: _printOrSavePdf,
-                    child: const Text('Print / Save'),
-                  ),
+                ElevatedButton(
+                  onPressed: _printOrSavePdf,
+                  child: const Text('Print / Save'),
                 ),
                 const SizedBox(width: 10),
-                Tooltip(
-                  message: 'Copy policy text to clipboard',
-                  child: ElevatedButton(
-                    onPressed: _copyToClipboard,
-                    child: const Text('Copy'),
-                  ),
+                ElevatedButton(
+                  onPressed: _copyToClipboard,
+                  child: const Text('Copy'),
                 ),
               ],
             ),
@@ -120,33 +112,59 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
   }
 }
 
-const String _defaultPolicy = '''Privacy Policy for Ramchin Smart School
+const String _defaultPolicy = '''
+Privacy Policy for Ramchin Smart School
 
 Welcome to Ramchin Smart School. This Privacy Policy explains how we collect, use, and protect personal information for students, parents, teachers, and school staff when using our Attendance Management App.
 
 1. Information We Collect
-- Personal Information: student name, date of birth, gender, photo; parent or guardian contact information; teacher and staff contact info.
-- Attendance Data: presence/absence records, timestamps, notes.
-- Device & Technical Information: device type, OS, app version, IP address for security.
+- Personal Information: student name, date of birth, gender, and profile photo; parent or guardian contact information; teacher and staff contact details.
+- Attendance Data: presence/absence records, timestamps, and notes.
+- Device & Technical Information: device type, operating system, app version, and IP address for security purposes.
 
 2. How We Use Information
-We use data to manage attendance, generate reports, and improve our services.
+We use collected data to:
+- Manage student attendance
+- Generate reports for schools
+- Improve app functionality and performance
 
 3. Data Sharing
-We do not sell personal information. We may share data with schools, authorized staff, third-party service providers (hosting, analytics), and law enforcement if required.
+We do NOT sell personal data. Data may be shared with:
+- Schools and authorized staff
+- Trusted service providers (hosting, analytics)
+- Legal authorities if required by law
 
 4. Data Security
-We use appropriate technical and organizational measures, including encryption in transit and at rest, and access controls. No system is 100% secure.
+We implement appropriate security measures including encryption and access control to protect user data.
 
 5. Data Retention
-We retain data only as long as necessary for the purposes described or as required by law. Schools may configure retention periods.
+We retain data only as long as necessary for operational and legal purposes. Schools may configure retention policies.
 
-6. Your Rights
-You may request access, correction, deletion, or portability of your data by contacting support.
+6. User Rights
+Users may request access, correction, or deletion of their data by contacting support.
 
 7. Children's Privacy
-We take special care to protect children's data and only collect information as required by schools with appropriate consent.
+We prioritize children's data protection and only collect necessary information with proper authorization from schools and guardians.
 
-8. Contact
-For questions, contact: ramchintech@gmail.com
+8. Contact Us
+For questions or concerns:
+Email: ramchintech@gmail.com
+
+9. Photo and Video Permissions
+Our app may request access to the device camera and media storage strictly for core functionality such as:
+
+- Capturing student profile photos
+- Uploading images for identification and attendance verification
+
+We ensure:
+- Permissions are requested only when the user performs an action (e.g., taking or uploading a photo)
+- No background access to photos or videos
+- No use of media for advertising or tracking
+
+All images are securely stored and accessible only to authorized school personnel.
+
+We do NOT:
+- Access media without user interaction
+- Collect unnecessary photos or videos
+- Use media data for analytics or ads
 ''';
